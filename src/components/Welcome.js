@@ -111,7 +111,7 @@ function Welcome() {
             </div>
                 <h1>Collaborators can</h1>
             <div id="switch">
-                <span>Add more people</span>
+                <span style={{color:'black'}}>Add more people</span>
                 {/*switch button here*/}
                 <FormControlLabel className="btn-switch" control={<IOSSwitch size="Normal" checked={checked} onChange={toggleChecked} />}
       />
