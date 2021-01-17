@@ -3,15 +3,21 @@ import './Welcome.css';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Modal from '@material-ui/core/Modal'
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import { SettingsApplicationsRounded } from '@material-ui/icons';
+import { SettingsApplicationsRounded, SettingsInputAntenna, SwapCalls } from '@material-ui/icons';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withStyles } from '@material-ui/core/styles';
+import Swal from 'sweetalert2';
+import validator from 'validator';
 function Welcome() {
     const [projname,setProjName]=useState("")
   const [orgname,setOrgName]=useState("")
+  const [email,setEmail]=useState("")
   const [open,setOpen]=useState(false)
-  const [checked, setChecked] = useState(false);
+  const [input,showInput]=useState(true)
+  const [checked, setChecked] = useState(false)
+  //this initialises the state to contain empty array 
+  const[users,setUsers]=useState([]);
  // const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   //const [modalStyle] = useState(getModalStyle);
@@ -20,8 +26,10 @@ function Welcome() {
     setOrgName(event.target.value);
     else if(event.target.id=='projname')
     setProjName(event.target.value);
-    console.log(event.target.id+
-      orgname+""+projname);
+    if(event.target.id=='email')
+    setEmail(event.target.value)
+    //console.log(event.target.id+
+      //orgname+""+projname);
   }
   const toggleChecked = () => {
     console.log("git push show")
@@ -31,10 +39,68 @@ function Welcome() {
    setOpen(true);
   }
   const handleClose=()=>{
+    showInput(true)
+    setEmail("");
     setOpen(false);
   }
   const handleContinue=()=>{
-    console.log(projname+" "+orgname);
+    //console.log(projname+" "+orgname);
+    if(!projname || !orgname)
+    console.log('input both the fields')
+    else{
+      //routing to the projects space page
+    }
+  }
+  const handleEnter=(event)=>{
+    if(event.key=='Enter')
+    {
+      if(validator.isEmail(email))
+      {
+      //validate
+      setUsers(users.concat(email))
+      setEmail("");
+      showInput(false)
+      console.log("in handle Enter func "+users)
+      }
+      else
+      {
+        Swal.fire({
+        title: 'Invalid Email',
+        text: 'Please enter a valid Email',
+        icon: 'warning',
+       })
+      }
+    }
+  }
+  const handleAddOnMain=()=>{
+    if(!projname || !orgname)
+    {
+      Swal.fire({
+        title: 'Fill all the fields',
+        text: 'Please enter all entries',
+        icon: 'warning',
+    })
+    }
+    else{
+    handleOpen();
+    }
+  }
+  const onSaveClick=()=>{
+    handleClose();
+    console.log(users)
+  }
+  const handleAddOnModal=()=>{
+    if(input==false)
+    {
+      showInput(true)
+    }
+   else{
+    Swal.fire({
+      title: 'Invalid Email',
+      text: 'Please Fill the email above',
+      icon: 'warning',
+  })
+   }
   }
   const customStyles = {
     content : {
@@ -99,15 +165,19 @@ function Welcome() {
       />
     );
   });
-  
+  const renderInput=(
+    <div className="input-container">
+    <span>Input Email Id</span>
+    <input type="text" name="email" id="email" onChange={handleClick} onKeyDown={handleEnter} value={email}/>
+    </div>
+  );
   const body=(
     <div className="dialog-container">
-            <div className="input-container">
-            <span>Input Email Id</span>
-            <input type="text" name="email" id="email"/>
-            </div>
+      {
+        input?renderInput:<div></div>
+      }
             <div className="add-container">
-                <div id="addicon"><AddBoxIcon/></div>
+                <div id="addicon" onClick={handleAddOnModal}><AddBoxIcon/></div>
                 <span>Add More Members</span>
             </div>
                 <h1>Collaborators can</h1>
@@ -118,7 +188,7 @@ function Welcome() {
       />
             </div>
             <div className="btn-save">
-            <button className="save-btn" onClick={handleClose}> Save</button>
+            <button className="save-btn" onClick={onSaveClick}> Save</button>
             </div>
         </div>
     );
@@ -154,7 +224,7 @@ function Welcome() {
     
           <section id="amu">
            {/*<p>{isDialogOpen}</p>*/}
-            <PersonAddIcon onClick={handleOpen} /><span>Add More Users</span>
+            <PersonAddIcon onClick={handleAddOnMain} /><span>Add More Users</span>
             <Modal
             open={open}
             onClose={handleClose}
