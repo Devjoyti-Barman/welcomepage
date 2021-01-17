@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: rgba(28, 28, 28, 0.84);
+  /* background: rgba(28, 28, 28, 0.84); */
 }
 
 body {
@@ -230,19 +230,17 @@ margin-left: 20px;
 }
 .dialog-container #switch{
   display: flex;
-  background-color: white;
   justify-content: space-between;
 }
 .dialog-container #switch span{
   font-family: Manrope;
-  background: white;
 font-size: 13px;
 font-style: normal;
 font-weight: 400;
 line-height: 24px;
 letter-spacing: 1px;
 text-align: left;
-color: #666666;
+color: #FFFFFF;
 }
 .btn-switch{
   color: #E24429;
