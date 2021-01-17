@@ -24,6 +24,7 @@ function Welcome() {
       orgname+""+projname);
   }
   const toggleChecked = () => {
+    console.log("git push show")
     setChecked((prev) => !prev);
   };
   const handleOpen=()=>{
