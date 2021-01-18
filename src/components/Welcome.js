@@ -48,6 +48,7 @@ function Welcome() {
     if(!projname || !orgname)
     console.log('input both the fields')
     else{
+      console.log(orgname+" "+projname+" "+ users)
       //routing to the projects space page
     }
   }
@@ -87,7 +88,7 @@ function Welcome() {
   }
   const onSaveClick=()=>{
     handleClose();
-    console.log(users)
+    console.log(orgname+" "+projname+" "+ users)
   }
   const handleAddOnModal=()=>{
     if(input==false)
@@ -126,7 +127,7 @@ function Welcome() {
         transform: 'translateX(16px)',
         color: '#E24429',
         '& + $track': {
-          backgroundColor: ' #E24429',
+          backgroundColor: ' black',
           opacity: 1,
           border: 'none',
         },
@@ -143,7 +144,7 @@ function Welcome() {
     track: {
       borderRadius: 26 / 2,
       border: `1px solid ${theme.palette.grey[400]}`,
-      backgroundColor: 'red',
+      backgroundColor: '#E24429',
       opacity: 1,
       transition: theme.transitions.create(['background-color', 'border']),
     },
